@@ -1,0 +1,1 @@
+ALTER TABLE `templates` MODIFY COLUMN `fileType` enum('word','image','excel') NOT NULL;

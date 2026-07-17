@@ -1,0 +1,1 @@
+ALTER TABLE `cardItemNames` DROP COLUMN `isVisible`;

@@ -1,0 +1,1 @@
+ALTER TABLE `cardItemNames` ADD `isVisible` boolean DEFAULT true;

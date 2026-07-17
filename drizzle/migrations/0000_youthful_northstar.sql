@@ -1,0 +1,1 @@
+ALTER TABLE `cards` ADD `barWidth` decimal(3,2) DEFAULT '0.8';
