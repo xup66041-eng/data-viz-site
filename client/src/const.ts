@@ -8,7 +8,7 @@ export const getLoginUrl = () => {
   const state = btoa(redirectUri);
 
   if (!oauthPortalUrl || !appId) {
-    return window.location.origin;
+    return `${window.location.origin}/api/oauth/dev-login`;
   }
 
   const url = new URL(`${oauthPortalUrl}/app-auth`);

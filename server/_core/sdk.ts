@@ -155,8 +155,23 @@ class SDKServer {
   }
 
   private getSessionSecret() {
-    const secret = ENV.cookieSecret;
+    const secret = ENV.cookieSecret || "data-viz-site-local-session-secret";
     return new TextEncoder().encode(secret);
+  }
+
+  private createFallbackUser(session: SessionPayload): User {
+    const now = new Date();
+    return {
+      id: 1,
+      openId: session.openId,
+      name: session.name || "管理者",
+      email: null,
+      loginMethod: "local",
+      role: "admin",
+      createdAt: now,
+      updatedAt: now,
+      lastSignedIn: now,
+    };
   }
 
   /**
@@ -268,6 +283,12 @@ class SDKServer {
 
     const sessionUserId = session.openId;
     const signedInAt = new Date();
+    const database = await db.getDb();
+
+    if (!database) {
+      return this.createFallbackUser(session);
+    }
+
     let user = await db.getUserByOpenId(sessionUserId);
 
     // If user not in DB, sync from OAuth server automatically
